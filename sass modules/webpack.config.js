@@ -30,7 +30,7 @@ const config = {
   entry: './src/index.tsx',
   output: {
     filename: 'bundle.js', // the name of the bundle
-    path: path.resolve(__dirname, '/dist'), // the bundle output path
+    path: path.join(__dirname, '/dist'), // the bundle output path
   },
   plugins: [
     // to import index.html file inside index.js
@@ -73,12 +73,14 @@ const config = {
 
 module.exports = (args) => {
   console.log(args);
+
+  console.log(path.join(__dirname, '/dist'));
   switch (true) {
     case args.dev:
       return { mode: 'development', ...config };
 
     case args.prod:
-      return { mode: 'development', ...config };
+      return { mode: 'production', ...config };
 
     default:
       throw new Error('unexpected --env arg');
