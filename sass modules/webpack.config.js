@@ -29,8 +29,8 @@ const cssModulesTypescriptLoader = {
 const config = {
   entry: './src/index.tsx',
   output: {
-    filename: 'bundle.js', // the name of the bundle
-    path: path.join(__dirname, '/dist'), // the bundle output path
+    filename: '[name].bundle.js', // the name of the bundle
+    path: path.join(__dirname, 'dist'), // the bundle output path
   },
   plugins: [
     // to import index.html file inside index.js
@@ -74,7 +74,6 @@ const config = {
 module.exports = (args) => {
   console.log(args);
 
-  console.log(path.join(__dirname, '/dist'));
   switch (true) {
     case args.dev:
       return { mode: 'development', ...config };

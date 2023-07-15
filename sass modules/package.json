@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack serve --env dev",
-    "build": "webpack --env prod",
+    "build": "rm -rf ./dist  && webpack --env prod",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
