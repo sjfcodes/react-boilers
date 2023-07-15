@@ -1,7 +1,9 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-const config = /** @type { import('webpack').Configuration } */ {
+const PORT = 8080;
+
+const config /** @type { import('webpack').Configuration } */ = {
   output: {
     path: path.join(__dirname, "/dist"), // the bundle output path
     filename: "bundle.js", // the name of the bundle
@@ -12,7 +14,13 @@ const config = /** @type { import('webpack').Configuration } */ {
     }),
   ],
   devServer: {
-    port: 8080, // you can change the port
+    port: PORT, // you can change the port
+    open: {
+      target: "http://localhost:" + PORT,
+      app: {
+        name: "Google Chrome",
+      },
+    },
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
