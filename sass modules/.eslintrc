@@ -35,5 +35,5 @@
       }
     ]
   },
-  "ignorePatterns": ["webpack.config.js", "*.css.d.ts"]
+  "ignorePatterns": ["webpack.config.js", "*.sass.d.ts"]
 }
