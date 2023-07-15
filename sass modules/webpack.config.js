@@ -1,10 +1,10 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const PORT = 3000;
 const sourceMap = true;
 
-//
 const cssLoaderWithModules = {
   loader: 'css-loader',
   options: {
@@ -34,10 +34,12 @@ const config = {
   },
   plugins: [
     // to import index.html file inside index.js
-    new HtmlWebpackPlugin({ template: 'src/index.html' }),
+    new HtmlWebpackPlugin({ template: 'public/index.html' }),
+    // https://github.com/webpack-contrib/webpack-bundle-analyzer#options-for-plugin
+    new BundleAnalyzerPlugin({ analyzerMode: 'static' }),
   ],
   devServer: {
-    port: PORT, // you can change the port
+    port: PORT,
     open: {
       target: 'http://localhost:' + PORT,
       app: { name: 'Google Chrome' },
