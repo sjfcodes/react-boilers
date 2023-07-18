@@ -1,26 +1,30 @@
-// import { useRef } from "react";
+import { useRef, useState } from "react";
 // import "./App.css";
 
-// function App() {
-//   const barRef: React.MutableRefObject<HTMLDivElement> = useRef(
-//     {} as HTMLDivElement
-//   );
-//   return (
-//     <div className="drag-container">
-//       <div id="barRef" ref={barRef}>
-//         <Marker barRef={barRef} />
-//         <Marker barRef={barRef} />
-//         <Marker barRef={barRef} />
-//       </div>
-//     </div>
-//   );
-// }
+function App() {
+  const barRef: React.MutableRefObject<HTMLDivElement> = useRef(
+    {} as HTMLDivElement
+  );
+  return (
+    <div style={{ width: "100vw", height: "100vh", border: "1px solid black" }}>
+      <div
+        ref={barRef}
+        style={{
+          width: "80%",
+          height: "80%",
+          border: "1px solid orange",
+          marginInline: "auto",
+        }}
+      >
+        <DraggableSVG barRef={barRef} />
+        {/* <DraggableSVG barRef={barRef} /> */}
+        {/* <DraggableSVG barRef={barRef} /> */}
+      </div>
+    </div>
+  );
+}
 
-// export default App;
-
-// type Props = {
-//   barRef: React.MutableRefObject<HTMLDivElement>;
-// };
+export default App;
 
 // const Marker = ({ barRef }: Props) => {
 //   const point = useRef({
@@ -94,19 +98,21 @@
 //   );
 // };
 
-import React, { useState } from "react";
-
 interface Point {
   x: number;
   y: number;
 }
+type Props = {
+  barRef: React.MutableRefObject<HTMLDivElement>;
+};
 
-const DraggableSVG: React.FC = () => {
+const DraggableSVG = ({ barRef }: Props) => {
   const [position, setPosition] = useState<Point>({ x: 50, y: 50 });
   const [dragging, setDragging] = useState(false);
+  const radius = 50;
 
   const handleMouseDown = (
-    e: React.MouseEvent<SVGCircleElement, MouseEvent>
+    _e: React.MouseEvent<SVGCircleElement, MouseEvent>
   ) => {
     setDragging(true);
   };
@@ -115,13 +121,24 @@ const DraggableSVG: React.FC = () => {
     setDragging(false);
   };
 
+  document.onclick = (e) => console.log(e);
+
   const handleMouseMove = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
     if (!dragging) return;
-    setPosition({
-      x: e.clientX,
-      y: position.y, // maintaining the y position constant for horizontal dragging
-    });
+    const currentX = e.clientX - barRef.current.offsetLeft;
+    const xMin = radius;
+    const xMax = barRef.current.offsetWidth - radius;
+
+    if (currentX > xMin && currentX < xMax) {
+      console.log({ currentX, xMin, xMax });
+      setPosition({
+        x: currentX,
+        y: e.clientY,
+      });
+    }
   };
+
+  document.body.style.margin = "0";
 
   return (
     <svg
@@ -141,4 +158,4 @@ const DraggableSVG: React.FC = () => {
   );
 };
 
-export default DraggableSVG;
+// export default DraggableSVG;
