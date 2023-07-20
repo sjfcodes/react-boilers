@@ -9,7 +9,7 @@ function App() {
   return (
     <div id="barRef" ref={barRef}>
       <svg width="100%" height="100%">
-        <DraggableSVG barRef={barRef} fill="#ff9900" />
+        <DraggableSVG barRef={barRef} />
         <DraggableSVG barRef={barRef} />
         <DraggableSVG barRef={barRef} />
       </svg>
@@ -29,17 +29,17 @@ type Props = {
   fill?: string;
 };
 
-const DraggableSVG = ({ barRef, radius = 50, fill = "#000" }: Props) => {
+const DraggableSVG = ({ barRef, radius = 50, fill = "#ff9900" }: Props) => {
   const [position, setPosition] = useState<Point>({ x: 50, y: 50 });
   const [dragging, setDragging] = useState(false);
 
   const handleMouseDown = () => {
-    console.log("handleMouseDown");
+    // console.log("handleMouseDown");
     setDragging(true);
   };
 
   const handleMouseMove = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
-    console.log("handleMouseMove");
+    // console.log("handleMouseMove");
     if (!dragging) return;
 
     const xMin = radius;
@@ -59,21 +59,25 @@ const DraggableSVG = ({ barRef, radius = 50, fill = "#000" }: Props) => {
   };
 
   const handleMouseUp = () => {
-    console.log("handleMouseUp");
+    // console.log("handleMouseUp");
     setDragging(false);
   };
 
   return (
-    <circle
-      cx={position.x}
-      cy={position.y}
-      r={radius}
-      fill={fill}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      // onMouseLeave={handleMouseUp}
-    />
+    <g>
+      <circle
+        cx={position.x}
+        cy={position.y}
+        r={radius}
+        fill={fill}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        // onMouseLeave={handleMouseUp}
+      >
+        <text>hello</text>
+      </circle>
+    </g>
   );
 };
 
